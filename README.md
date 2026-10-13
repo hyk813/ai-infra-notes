@@ -2,6 +2,9 @@
 
 一个本地优先的个人资料站，用来整理 **知识笔记、面试复盘和技术文章**。内容是普通 Markdown 文件，界面参考 AIInfraGuide 的分类入口、文档导航与博客列表形式，自行实现站点代码和示例内容。
 
+- 在线站点：<https://hyk813.github.io/ai-infra-notes/>
+- GitHub 仓库：<https://github.com/hyk813/ai-infra-notes>
+
 ## 本地运行
 
 需要 Node.js **22.12 或更高版本**，推荐 Node.js 24。
@@ -104,17 +107,25 @@ src/scripts/          搜索、筛选、主题、收藏与代码复制
 public/               网站图标等静态资源
 ```
 
-## 后续放到 GitHub
+## GitHub Pages 发布
 
-这是一个独立 Git 仓库，上传时在本目录内配置自己的远程地址并推送。依赖、构建产物和缓存已被忽略；保留 `package-lock.json` 以锁定依赖。没有自动部署或推送行为。
-
-如果未来需要 GitHub Pages 等子路径部署，可以指定路径再构建：
+这是一个独立 Git 仓库，远程地址为 `https://github.com/hyk813/ai-infra-notes.git`。修改 Markdown 或站点代码后，在本目录提交并推送：
 
 ```bash
-SITE_BASE=/ai-infra-notes npm run build
+git add .
+git commit -m "Update notes"
+git push origin main
 ```
 
-默认路径为 `/`，适合当前本地使用。图片建议使用 Markdown 相对路径，使 Astro 在构建中处理。
+推送到 `main` 后，GitHub Actions 自动检查、构建并发布 GitHub Pages。可在仓库的 [Actions 页面](https://github.com/hyk813/ai-infra-notes/actions) 查看进度，或手动运行 **Deploy GitHub Pages** 工作流。其他分支与 Pull Request 只执行构建检查。
+
+Pages 使用 **GitHub Actions** 作为发布来源。工作流读取 Pages 配置中的域名与子路径，因此本地运行仍使用 `/`，线上使用 `/ai-infra-notes/`。本地检查线上构建路径：
+
+```bash
+SITE_URL=https://hyk813.github.io SITE_BASE=/ai-infra-notes npm run build
+```
+
+仓库为公开仓库。`draft: true` 仅阻止内容出现在正式网站中；已提交的 Markdown 源文件仍可在 GitHub 查看。依赖、构建产物和缓存已被忽略；保留 `package-lock.json` 以锁定依赖。图片建议使用 Markdown 相对路径，使 Astro 在构建中处理。
 
 ## 呈现参考
 
