@@ -2,7 +2,7 @@
 title: {{title}}
 description: "记录本次面试的重点、回答情况与后续行动。"
 category: {{category}}
-tags: [面试复盘]
+tags: [面经总结]
 date: {{date}}
 updated: {{date}}
 company: "待填写"

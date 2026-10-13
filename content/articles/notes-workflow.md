@@ -1,7 +1,7 @@
 ---
 title: "把知识、面试和实践连在一起"
 description: "一套简单的资料整理方式：从问题出发，通过复盘发现差距，再用实践补齐理解。"
-category: programming
+category: fundamentals
 tags: [记录方法, 知识管理]
 date: 2026-10-13
 order: 5
@@ -9,7 +9,7 @@ order: 5
 
 ## 三种内容，各有侧重
 
-知识笔记负责把一个问题讲清楚；面试复盘负责记录当时的表现与差距；技术文章负责沉淀实现过程和实验观察。
+知识笔记负责把一个问题讲清楚；面经总结负责记录当时的表现与差距；技术文章负责沉淀实现过程和实验观察。
 
 它们可以互相链接，而不是复制出多份相同答案。
 
@@ -27,4 +27,4 @@ order: 5
 
 ## 继续阅读
 
-[面试复盘示例](../interviews/example-review.md) · [实验记录示例](./measure-kv-loading.md)
+[面经总结示例](../interviews/example-review.md) · [实验记录示例](./measure-kv-loading.md)

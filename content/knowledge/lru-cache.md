@@ -1,7 +1,7 @@
 ---
 title: "LRU Cache：哈希表与双向链表的组合"
 description: "解释平均 O(1) 查询与更新，以及并发访问和迭代器生命周期的边界。"
-category: programming
+category: fundamentals
 tags: [数据结构, C++, LRU]
 date: 2026-10-13
 order: 10

@@ -1,6 +1,6 @@
 # AI Infra Notes
 
-一个本地优先的个人资料站，用来整理 **知识笔记、面试复盘和技术文章**。内容是普通 Markdown 文件，界面参考 AIInfraGuide 的分类入口、文档导航与博客列表形式，自行实现站点代码和示例内容。
+一个本地优先的个人资料站，用来整理 **知识笔记、面经总结和技术文章**。内容是普通 Markdown 文件，界面参考 AIInfraGuide 的分类入口、文档导航与博客列表形式，自行实现站点代码和示例内容。
 
 - 在线站点：<https://hyk813.github.io/ai-infra-notes/>
 - GitHub 仓库：<https://github.com/hyk813/ai-infra-notes>
@@ -31,7 +31,7 @@ npm run astro -- dev stop
 
 ```bash
 npm run new -- knowledge "KV Cache 容量计算" --category inference --slug kv-cache-size
-npm run new -- interviews "某公司一面复盘" --slug first-interview
+npm run new -- interviews "某公司一面总结" --slug first-interview
 npm run new -- articles "一次 I/O 性能分析" --slug io-analysis
 ```
 
@@ -40,7 +40,7 @@ npm run new -- articles "一次 I/O 性能分析" --slug io-analysis
 | 内容 | 存放目录 |
 | --- | --- |
 | 八股、知识与常见追问 | `content/knowledge/` |
-| 面试记录与复盘 | `content/interviews/` |
+| 面经总结 | `content/interviews/` |
 | 技术文档、实践记录和文章 | `content/articles/` |
 | 新建文档模板 | `templates/` |
 
@@ -60,7 +60,7 @@ draft: false
 ---
 ```
 
-- `category`：`inference`、`models`、`systems`、`programming`。
+- `category`：`inference`（推理优化）、`training`（训练优化）、`models`（LLM 架构与算法）、`fundamentals`（计算机基础）。
 - `status`：`ready` 表示已整理，`review` 表示待复习。
 - `order`：章节导航顺序，列表页仍按更新时间排列。
 - `isExample: true`：示例会被明确标注；实际面经不需要此字段。

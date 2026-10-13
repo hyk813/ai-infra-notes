@@ -1,7 +1,7 @@
 ---
 title: "读得少，不代表读得快：理解读放大"
 description: "区分有效数据量、实际读量与 I/O 请求数，解释稀疏 KV 访问的存储瓶颈。"
-category: systems
+category: fundamentals
 tags: [SSD, I/O, 性能分析]
 date: 2026-10-13
 order: 20

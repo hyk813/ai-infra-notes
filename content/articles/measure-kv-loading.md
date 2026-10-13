@@ -1,7 +1,7 @@
 ---
 title: "一次 KV 读取性能分析，应该记录什么？"
 description: "从基线、计时边界到质量验证，建立一份可以回看和复测的技术记录。"
-category: systems
+category: inference
 tags: [性能分析, 实验记录, KV Cache]
 date: 2026-10-13
 isExample: true

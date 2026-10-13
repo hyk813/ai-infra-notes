@@ -1,7 +1,7 @@
 ---
 title: "Python 并发：线程、进程还是协程？"
 description: "理解 GIL、原生计算与阻塞 I/O，按实际工作负载选择并发方式。"
-category: programming
+category: fundamentals
 tags: [Python, GIL, 并发]
 date: 2026-10-13
 order: 20

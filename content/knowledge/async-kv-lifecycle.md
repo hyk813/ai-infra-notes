@@ -1,7 +1,7 @@
 ---
 title: "异步 KV 迁移：什么时候才能释放旧副本？"
 description: "用状态、引用计数和完成事件组织 KV 提升与淘汰，理解真正的计算传输重叠。"
-category: systems
+category: inference
 tags: [异步 I/O, KV Cache, 并发]
 date: 2026-10-13
 order: 10

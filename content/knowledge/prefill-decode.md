@@ -1,7 +1,7 @@
 ---
 title: "Prefill 与 Decode 的瓶颈为什么不同？"
 description: "从计算形状与数据复用出发，解释首 token 延迟和逐 token 生成的性能差异。"
-category: models
+category: inference
 tags: [Transformer, Prefill, Decode]
 date: 2026-10-13
 order: 10

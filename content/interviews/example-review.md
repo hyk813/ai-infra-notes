@@ -1,8 +1,8 @@
 ---
-title: "面试复盘怎么写：一份结构示例"
+title: "面经总结怎么写：一份结构示例"
 description: "用模拟问题展示事实记录、回答复盘与后续行动，便于复制成自己的真实面经。"
 category: inference
-tags: [面试复盘, 推理系统]
+tags: [面经总结, 推理优化]
 date: 2026-10-13
 company: "示例公司"
 role: "AI Infra 实习"

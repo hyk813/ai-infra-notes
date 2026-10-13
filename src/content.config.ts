@@ -5,7 +5,7 @@ import { glob } from 'astro/loaders';
 const schema = z.object({
   title: z.string(),
   description: z.string(),
-  category: z.enum(['inference', 'models', 'systems', 'programming']),
+  category: z.enum(['inference', 'training', 'models', 'fundamentals']),
   tags: z.array(z.string()).default([]),
   date: z.coerce.date(),
   updated: z.coerce.date().optional(),
