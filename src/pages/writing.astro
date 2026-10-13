@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="写作指南"><div class="writing-page"><div class="page-intro"><span class="eyebrow">MAKE IT YOURS</span><h1>从一篇记录开始。</h1><p>用 Markdown 写内容，分类、标签、目录和搜索会自动更新。</p></div><div class="prose">
+  <h2 id="directories">内容放在哪里</h2><table><thead><tr><th>想记录什么</th><th>目录</th><th>建议结构</th></tr></thead><tbody><tr><td>八股与知识笔记</td><td><code>content/knowledge/</code></td><td>问题 → 简答 → 原理 → 追问</td></tr><tr><td>面试经历与复盘</td><td><code>content/interviews/</code></td><td>基本信息 → 问题 → 回答 → 差距 → 行动</td></tr><tr><td>技术文档与文章</td><td><code>content/articles/</code></td><td>背景 → 方法 → 实现 → 结果 → 总结</td></tr></tbody></table>
+  <h2 id="create">用模板新建</h2><pre><code>npm run new -- knowledge "KV Cache 容量计算" --category inference --slug kv-cache-size
+npm run new -- interviews "某公司一面复盘" --slug first-interview
+npm run new -- articles "一次 I/O 性能分析" --slug io-analysis</code></pre><p>也可以复制 <code>templates/</code> 下对应模板。文件名决定链接路径，发布后尽量保持文件名稳定。</p>
+  <h2 id="metadata">写好开头的信息</h2><pre><code>---
+title: "KV Cache 容量计算"
+description: "从模型结构推导缓存大小，理解 GQA 的内存收益。"
+category: inference
+tags: [KV Cache, GQA]
+date: 2026-10-13
+updated: 2026-10-13
+order: 10
+status: review
+draft: true
+---</code></pre><p><code>category</code> 支持 <code>inference</code>、<code>models</code>、<code>systems</code>、<code>programming</code>。<code>status</code> 可设为 <code>ready</code>（已整理）或 <code>review</code>（待复习）。</p><p>开发模式可查看草稿；整理好后将 <code>draft</code> 改为 <code>false</code>，正式构建才会收录。修改内容后更新 <code>updated</code>，便于按更新时间回看。</p>
+  <h2 id="markdown">代码、公式与图片</h2><p>使用标准 Markdown：二级和三级标题生成目录，代码块支持高亮与复制，表格和引用可以直接使用。数学公式用 <code>$…$</code> 或 <code>$$…$$</code>，图片可放在文章旁边并使用相对路径。</p><p>文章之间可以使用相对 Markdown 链接，例如 <code>[容量计算](../knowledge/kv-cache-size.md)</code>；站点会转换成对应阅读页链接。示例文章保留 <code>isExample: true</code>，实际记录不需要这个标记。</p>
+  <h2 id="routine">一套简单的记录习惯</h2><ol><li>先记问题和当时的回答，不等理解完整再开始。</li><li>补充公式、代码、参考资料和仍不确定的地方。</li><li>把面试暴露的知识缺口链接到知识笔记。</li><li>完成一次修改后，用 Git 提交保存进展。</li></ol><p>快捷键 <code>Ctrl/⌘ + K</code> 打开全文搜索。收藏用于暂存值得回看的条目，保存在浏览器本地。</p>
+</div></div></Base>

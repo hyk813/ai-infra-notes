@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import 'katex/dist/katex.min.css';
+import Icon from '../components/Icon.astro';
+import { site, sections, url } from '../config';
+interface Props { title?: string; description?: string; wide?: boolean }
+const { title, description = site.description, wide = false } = Astro.props;
+const pathname = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f9faf7" />
+    <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
+    <title>{title ? `${title} · ${site.title}` : `${site.title} · 我的知识与实践`}</title>
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('ai-notes-theme');
+        document.documentElement.dataset.theme = theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch { document.documentElement.dataset.theme = 'light'; }
+    </script>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">跳到正文</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href={url('/')} aria-label="AI Infra Notes 首页"><span class="brand-mark"><Icon name="book" size={21} /></span><span>AI Infra<span class="brand-light"> Notes</span></span></a>
+        <nav class="main-nav" aria-label="主导航" id="main-nav">
+          {Object.entries(sections).map(([key, section]) => <a class:list={{ active: pathname.startsWith(url(`/${key}/`)) }} href={url(`/${key}/`)}>{section.label}</a>)}
+        </nav>
+        <div class="header-actions">
+          <button class="search-trigger" data-open-search aria-label="搜索所有资料"><Icon name="search" size={17} /><span>搜索笔记…</span><kbd data-shortcut>⌘ K</kbd></button>
+          <a class:list={['icon-button', { active: pathname === url('/bookmarks/') }]} href={url('/bookmarks/')} aria-label="我的收藏" title="我的收藏"><Icon name="bookmark" size={19} /></a>
+          <button class="icon-button" data-theme-toggle aria-label="切换深色模式" title="切换主题"><Icon name="sun" class="theme-sun" size={19} /><Icon name="moon" class="theme-moon" size={19} /></button>
+          <button class="icon-button mobile-menu" data-mobile-menu aria-label="展开导航" aria-expanded="false" aria-controls="main-nav"><Icon name="menu" size={20} /></button>
+        </div>
+      </div>
+    </header>
+    <div class="reading-progress" aria-hidden="true"><span></span></div>
+    <main id="main" class:list={{ 'wide-main': wide }}><slot /></main>
+    <footer class="site-footer"><div><a href={url('/')} class="footer-brand">{site.title}</a><span>记录，理解，再向前一步。</span></div><div><a href={url('/writing/')}>写作指南</a><span>© 2026 {site.author}</span></div></footer>
+    <dialog id="search-dialog" class="search-dialog" data-search-index={url('/search-index.json')}>
+      <div class="search-box"><Icon name="search" size={21} /><input id="global-search" type="search" placeholder="搜索标题、标签或正文…" autocomplete="off" aria-label="全文搜索" aria-controls="search-results" /><button class="icon-button" data-close-search aria-label="关闭搜索"><Icon name="close" size={20} /></button></div>
+      <div class="search-scopes" aria-label="搜索范围"><button class="selected" data-search-scope="all">全部</button>{Object.entries(sections).map(([key, section]) => <button data-search-scope={key}>{section.label}</button>)}</div>
+      <div id="search-status" class="search-status" role="status">输入关键词，搜索所有已收录内容。</div>
+      <ul id="search-results" class="search-results"></ul>
+      <div class="search-footer"><span><kbd>↑</kbd><kbd>↓</kbd> 选择 <kbd>Enter</kbd> 打开</span><span><kbd>Esc</kbd> 关闭</span></div>
+    </dialog>
+    <div class="toast" role="status" hidden></div>
+    <script>import '../scripts/app';</script>
+  </body>
+</html>

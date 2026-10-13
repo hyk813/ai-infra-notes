@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../config';
+---
+<Base title="页面未找到"><div class="container bookmarks-page"><div class="empty-state"><span class="eyebrow">404 / PAGE NOT FOUND</span><h1>这页笔记还没写到。</h1><p>内容可能已经移动，也可以试试全文搜索。</p><div class="hero-buttons" style="justify-content:center"><a class="button primary" href={url('/')}>回到首页</a><button class="button" data-open-search>搜索资料</button></div></div></div></Base>

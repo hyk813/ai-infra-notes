@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import DocumentCard from '../components/DocumentCard.astro';
+import Icon from '../components/Icon.astro';
+import { documents, recent } from '../lib/content';
+const all = recent(await documents());
+---
+<Base title="我的收藏">
+  <section class="container bookmarks-page"><div class="page-intro"><span class="eyebrow">SAVED FOR LATER</span><h1>我的收藏</h1><p>把值得回看的问题留在手边。收藏保存在当前浏览器中。</p></div><p class="catalog-count" data-bookmarks-count role="status"></p><div class="document-grid" data-bookmarks-list>{all.map((entry) => <DocumentCard entry={entry} />)}</div><div class="empty-state" data-bookmarks-empty><Icon name="bookmark" size={29} /><h2>还没有收藏</h2><p>在阅读页点击“收藏”，就能在这里找到它。</p></div></section>
+</Base>

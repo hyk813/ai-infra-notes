@@ -1,0 +1,17 @@
+---
+import Icon from './Icon.astro';
+import { sections, topics } from '../config';
+import { docUrl, dateLabel, updated, readingMinutes, stateLabel, type Document } from '../lib/content';
+interface Props { entry: Document; compact?: boolean }
+const { entry, compact = false } = Astro.props;
+const section = sections[entry.collection];
+---
+<article class:list={['document-card', { compact }]} data-document-card data-document-key={`${entry.collection}:${entry.id}`} data-category={entry.data.category} data-tags={JSON.stringify(entry.data.tags)} data-title={entry.data.title} data-description={entry.data.description} data-company={entry.data.company || ''} data-href={docUrl(entry)}>
+  <div class="card-top"><span class:list={['pill', entry.collection]}><Icon name={section.icon} size={13} />{section.label}</span><span class:list={['state', { example: entry.data.isExample, review: entry.data.status === 'review' || entry.data.draft }]}>{stateLabel(entry)}</span></div>
+  <h3><a href={docUrl(entry)}>{entry.data.title}</a></h3>
+  <p class="card-description">{entry.data.description}</p>
+  {entry.collection === 'interviews' && entry.data.company && <p class="interview-meta">{[entry.data.company, entry.data.role, entry.data.round].filter(Boolean).join(' · ')}</p>}
+  <div class="tag-row">{entry.data.tags.slice(0, 3).map((tag) => <span>#{tag}</span>)}</div>
+  <div class="card-bottom"><span>{dateLabel(updated(entry))}<span class="meta-dot">·</span>{readingMinutes(entry)} 分钟</span><Icon name="arrow" size={17} /></div>
+  <span class="sr-only">分类：{topics[entry.data.category].label}</span>
+</article>

@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import DocumentCard from '../../components/DocumentCard.astro';
+import { sections, topics, url, type Section } from '../../config';
+import { documents, recent } from '../../lib/content';
+export function getStaticPaths() { return Object.keys(sections).map((section) => ({ params: { section } })); }
+const kind = Astro.params.section as Section;
+const section = sections[kind];
+const all = await documents();
+const entries = recent(all.filter((entry) => entry.collection === kind));
+const tags = [...new Set(entries.flatMap((entry) => entry.data.tags))].sort((a, b) => a.localeCompare(b, 'zh-CN'));
+const exampleCount = entries.filter((entry) => entry.data.isExample).length;
+const companies = [...new Set(entries.map((entry) => entry.data.company).filter((company): company is string => !!company))];
+---
+<Base title={section.label} description={section.description}>
+  <div class="container catalog-layout" data-catalog>
+    <aside class="catalog-sidebar" aria-label="资料分类">
+      <p class="sidebar-label">我的资料</p>
+      <nav class="sidebar-nav">{Object.entries(sections).map(([key, value]) => <a class:list={{ active: kind === key }} href={url(`/${key}/`)}><Icon name={value.icon} size={16} />{value.label}</a>)}</nav>
+      <p class="sidebar-label">按方向浏览</p>
+      <div class="topic-filters">
+        <button class="topic-filter active" data-topic="all"><Icon name="layers" size={15} /><span>全部方向</span><span>{entries.length}</span></button>
+        {Object.entries(topics).map(([key, topic]) => <button class="topic-filter" data-topic={key}><Icon name={topic.icon} size={15} /><span>{topic.label}</span><span>{entries.filter((entry) => entry.data.category === key).length}</span></button>)}
+      </div>
+      <p class="sidebar-note">{kind === 'interviews' ? '先还原问题和回答，再记录差距与下一步。' : '每篇记录都可以打标签，方便沿着一个问题继续探索。'}<br /><a class="text-link" href={url('/writing/')}>新增内容的方法 <Icon name="arrow" size={13} /></a></p>
+    </aside>
+    <section>
+      <div class="catalog-heading"><span class="eyebrow">{section.english}</span><h1>{section.label}</h1><p>{section.description}</p></div>
+      <div class="catalog-toolbar">
+        <label class="filter-input-wrap"><Icon name="search" size={16} /><input type="search" data-filter-text placeholder="筛选标题、摘要或标签…" aria-label="筛选当前列表" /></label>
+        <select data-filter-tag aria-label="按标签筛选"><option value="all">全部标签</option>{tags.map((tag) => <option value={tag}>{tag}</option>)}</select>
+        {kind === 'interviews' && <select data-filter-company aria-label="按公司筛选"><option value="all">全部公司</option>{companies.map((company) => <option value={company}>{company}</option>)}</select>}
+      </div>
+      <p class="catalog-count" role="status" data-filter-count>共 {entries.length} 篇{exampleCount ? `，含 ${exampleCount} 份示例` : ''} · 按更新时间排列</p>
+      <div class="document-grid catalog-grid">{entries.map((entry) => <DocumentCard entry={entry} />)}</div>
+      <div class="empty-state" data-filter-empty hidden><Icon name={section.icon} size={28} /><h2>这里还没有匹配的内容</h2><p>换一个方向或关键词，或者记录下第一个问题。</p><button class="button" data-reset-filters>清除筛选</button></div>
+    </section>
+  </div>
+</Base>
