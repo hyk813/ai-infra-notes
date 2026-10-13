@@ -34,6 +34,7 @@ jobs:
         env:
           SITE_URL: ${{ steps.pages.outputs.origin }}
           SITE_BASE: ${{ steps.pages.outputs.base_path }}
+          PUBLIC_SITE_VERSION: ${{ github.sha }}
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

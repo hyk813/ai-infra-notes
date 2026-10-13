@@ -19,7 +19,17 @@ export const topics = {
 } as const;
 export type Topic = keyof typeof topics;
 
-export function url(path: string = '/') {
+export const siteVersion = import.meta.env.PUBLIC_SITE_VERSION || '';
+
+export function pathUrl(path: string = '/') {
   const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   return `${base}${path.startsWith('/') ? path : `/${path}`}`;
+}
+
+export function url(path: string = '/') {
+  const result = pathUrl(path);
+  if (!siteVersion) return result;
+  const target = new URL(result, 'https://site.invalid');
+  target.searchParams.set('v', siteVersion);
+  return `${target.pathname}${target.search}${target.hash}`;
 }

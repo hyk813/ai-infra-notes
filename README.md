@@ -125,6 +125,8 @@ Pages 使用 **GitHub Actions** 作为发布来源。工作流读取 Pages 配�
 SITE_URL=https://hyk813.github.io SITE_BASE=/ai-infra-notes npm run build
 ```
 
+每次部署以提交 SHA 作为版本号，页面链接和搜索索引使用 `v` 参数区分版本，避免页面跳转或普通刷新命中上一版缓存。打开页面时还会检查最新部署版本；主题和收藏仍保存在原有 localStorage 中。
+
 仓库为公开仓库。`draft: true` 仅阻止内容出现在正式网站中；已提交的 Markdown 源文件仍可在 GitHub 查看。依赖、构建产物和缓存已被忽略；保留 `package-lock.json` 以锁定依赖。图片建议使用 Markdown 相对路径，使 Astro 在构建中处理。
 
 ## 呈现参考

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import 'katex/dist/katex.min.css';
 import Icon from '../components/Icon.astro';
-import { site, sections, url } from '../config';
+import { site, sections, url, pathUrl, siteVersion } from '../config';
 interface Props { title?: string; description?: string; wide?: boolean }
 const { title, description = site.description, wide = false } = Astro.props;
 const pathname = Astro.url.pathname;
@@ -15,6 +15,7 @@ const pathname = Astro.url.pathname;
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f9faf7" />
+    <meta name="site-version" content={siteVersion} />
     <link rel="icon" type="image/svg+xml" href={url('/favicon.svg')} />
     <title>{title ? `${title} · ${site.title}` : `${site.title} · 我的知识与实践`}</title>
     <script is:inline>
@@ -23,6 +24,27 @@ const pathname = Astro.url.pathname;
         document.documentElement.dataset.theme = theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       } catch { document.documentElement.dataset.theme = 'light'; }
     </script>
+    {siteVersion && <script is:inline define:vars={{ pageVersion: siteVersion, versionPath: pathUrl('/site-version.json') }}>
+      // Each release gets its own URL, including ordinary refreshes and navigation.
+      const current = new URL(location.href);
+      if (!current.searchParams.has('v')) {
+        current.searchParams.set('v', pageVersion);
+        history.replaceState(history.state, '', current);
+      }
+      const latest = new URL(versionPath, location.origin);
+      latest.searchParams.set('check', String(Date.now()));
+      fetch(latest, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } })
+        .then(response => response.ok ? response.json() : null)
+        .then(data => {
+          if (!data || typeof data.version !== 'string' || !data.version || data.version === pageVersion) return;
+          const target = new URL(location.href);
+          // A stale edge must not cause a redirect loop.
+          if (target.searchParams.get('v') === data.version) return;
+          target.searchParams.set('v', data.version);
+          location.replace(target);
+        })
+        .catch(() => { /* Keep the page usable when the version check is offline. */ });
+    </script>}
   </head>
   <body>
     <a href="#main" class="skip-link">跳到正文</a>
@@ -30,11 +52,11 @@ const pathname = Astro.url.pathname;
       <div class="header-inner">
         <a class="brand" href={url('/')} aria-label="AI Infra Notes 首页"><span class="brand-mark"><Icon name="book" size={21} /></span><span>AI Infra<span class="brand-light"> Notes</span></span></a>
         <nav class="main-nav" aria-label="主导航" id="main-nav">
-          {Object.entries(sections).map(([key, section]) => <a class:list={{ active: pathname.startsWith(url(`/${key}/`)) }} href={url(`/${key}/`)}>{section.label}</a>)}
+          {Object.entries(sections).map(([key, section]) => <a class:list={{ active: pathname.startsWith(pathUrl(`/${key}/`)) }} href={url(`/${key}/`)}>{section.label}</a>)}
         </nav>
         <div class="header-actions">
           <button class="search-trigger" data-open-search aria-label="搜索所有资料"><Icon name="search" size={17} /><span>搜索笔记…</span><kbd data-shortcut>⌘ K</kbd></button>
-          <a class:list={['icon-button', { active: pathname === url('/bookmarks/') }]} href={url('/bookmarks/')} aria-label="我的收藏" title="我的收藏"><Icon name="bookmark" size={19} /></a>
+          <a class:list={['icon-button', { active: pathname === pathUrl('/bookmarks/') }]} href={url('/bookmarks/')} aria-label="我的收藏" title="我的收藏"><Icon name="bookmark" size={19} /></a>
           <button class="icon-button" data-theme-toggle aria-label="切换深色模式" title="切换主题"><Icon name="sun" class="theme-sun" size={19} /><Icon name="moon" class="theme-moon" size={19} /></button>
           <button class="icon-button mobile-menu" data-mobile-menu aria-label="展开导航" aria-expanded="false" aria-controls="main-nav"><Icon name="menu" size={20} /></button>
         </div>

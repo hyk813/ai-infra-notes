@@ -8,11 +8,18 @@ export default function contentLinks(options = {}) {
     if (!source) return;
     const walk = (node) => {
       if (node.type === 'link' && typeof node.url === 'string' && /\.md(?:[?#]|$)/.test(node.url) && !/^\w+:/.test(node.url)) {
-        const [filename, suffix = ''] = node.url.split(/(?=[?#])/);
+        const boundary = node.url.search(/[?#]/);
+        const filename = boundary === -1 ? node.url : node.url.slice(0, boundary);
+        const suffix = boundary === -1 ? '' : node.url.slice(boundary);
         const absolute = filename.startsWith('/') ? path.resolve(root, filename.slice(1)) : path.resolve(path.dirname(source), filename);
         const relative = path.relative(root, absolute).replaceAll(path.sep, '/');
         if (/^(knowledge|interviews|articles)\//.test(relative)) {
           node.url = `${base}/${relative.replace(/\.md$/, '').split('/').map(encodeURIComponent).join('/')}/${suffix}`;
+          if (options.version) {
+            const target = new URL(node.url, 'https://site.invalid');
+            target.searchParams.set('v', options.version);
+            node.url = `${target.pathname}${target.search}${target.hash}`;
+          }
         }
       }
       for (const child of node.children || []) walk(child);

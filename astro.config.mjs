@@ -12,7 +12,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkMath, [contentLinks, { base: process.env.SITE_BASE || '/' }]],
+      remarkPlugins: [remarkMath, [contentLinks, { base: process.env.SITE_BASE || '/', version: process.env.PUBLIC_SITE_VERSION || '' }]],
       rehypePlugins: [rehypeKatex],
     }),
     shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' } },
