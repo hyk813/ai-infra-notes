@@ -37,7 +37,7 @@ const counts = Object.fromEntries(Object.keys(sections).map((key) => [key, {
     </section>
     <section class="home-section">
       <div class="section-heading"><div><h2>最近整理</h2><p>回到刚刚想明白的问题，继续往下走。</p></div><button class="text-link icon-button" data-open-search>搜索全部 <Icon name="search" size={16} /></button></div>
-      <div class="document-grid">{latest.map((entry) => <DocumentCard entry={entry} />)}</div>
+      {latest.length > 0 ? <div class="document-grid">{latest.map((entry) => <DocumentCard entry={entry} />)}</div> : <div class="empty-state"><Icon name="book" size={28} /><h2>从第一篇笔记开始</h2><p>新增并发布内容后，最近整理的记录会显示在这里。</p><a class="button" href={url('/writing/')}>查看写作指南</a></div>}
     </section>
     <section class="writing-callout"><div><h2>先记下来，再慢慢完善。</h2><p>问题、面试和技术实践都有对应模板，从一篇笔记开始。</p></div><a href={url('/writing/')} class="button">查看写作指南 <Icon name="arrow" size={16} /></a></section>
   </div>

@@ -6,7 +6,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const [kind, title, ...rest] = args;
 const kinds = { knowledge: 'knowledge', interviews: 'interview', articles: 'article' };
-const help = `用法：npm run new -- <knowledge|interviews|articles> "标题" [--category inference] [--slug file-name]\n方向：inference（推理优化）、training（训练优化）、models（LLM 架构与算法）、fundamentals（计算机基础）\n示例：npm run new -- knowledge "KV Cache 容量计算" --slug kv-cache-size`;
+const help = `用法：npm run new -- <knowledge|interviews|articles> "标题" [--category inference] [--slug file-name]\n方向：inference（推理优化）、training（训练优化）、models（LLM 架构与算法）、fundamentals（系统基础）\n示例：npm run new -- knowledge "KV Cache 容量计算" --slug kv-cache-size`;
 if (args.includes('--help') || args.includes('-h')) { console.log(help); process.exit(0); }
 if (!Object.hasOwn(kinds, kind || '') || !title || title.startsWith('--')) { console.error(help); process.exit(1); }
 const options = {};

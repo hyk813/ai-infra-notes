@@ -15,7 +15,7 @@ export const topics = {
   inference: { label: '推理优化', icon: 'layers', description: '调度、KV Cache、推理框架与性能优化。' },
   training: { label: '训练优化', icon: 'training', description: '分布式训练、显存管理与训练性能优化。' },
   models: { label: 'LLM 架构与算法', icon: 'nodes', description: 'Transformer、注意力机制、MoE 与模型算法。' },
-  fundamentals: { label: '计算机基础', icon: 'terminal', description: '操作系统、网络、编程语言与数据结构。' },
+  fundamentals: { label: '系统基础', icon: 'terminal', description: '操作系统、网络、内存、I/O 与并发。' },
 } as const;
 export type Topic = keyof typeof topics;
 
